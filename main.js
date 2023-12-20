@@ -3,26 +3,27 @@ let display = document.querySelector(".screen");
 let equal = document.querySelector(".btn.equal");
 
 function add(a, b) {
-  //return a + b;
-  display.textContent = a + b;
+  result = display.textContent = a + b;
+  console.log("Result is: " + result);
 }
 
 function subtract(a, b) {
-  display.textContent = a - b;
+  result = display.textContent = a - b;
 }
 
 function multiply(a, b) {
-  display.textContent = a * b;
+  result = display.textContent = a * b;
 }
 
 function division(a, b) {
-  display.textContent = a / b;
+  result = display.textContent = a / b;
 }
 
 let num1;
 let num2;
 let operator;
 let called = false;
+let result;
 
 function operate(num1, num2, operator) {
   switch (operator) {
@@ -64,18 +65,28 @@ buttons.addEventListener("click", (e) => {
     operatorClicked(e.target.value);
     console.log(e.target.value);
   }
-  if (e.target.className === "btn equal") {
+});
+
+equal.addEventListener("click", (e) => {
+  if (e.target.className === "btn equal" && result === undefined) {
+    console.log("result definition: " + result);
     operate(num1, num2, operator);
+  } else if (e.target.className === "btn equal" && result !== undefined) {
+    console.log("result definition: " + result);
+    operate(result, num2, operator);
   }
 });
 
 //Helper functions
 
 function appendNumber(number) {
-  if (display.textContent === "0") {
-    resetDisplay();
-  }
-  if (called && num2 === undefined) {
+  if (
+    display.textContent === "0" ||
+    display.textContent === "+" ||
+    display.textContent === "-" ||
+    display.textContent === "*" ||
+    display.textContent === "÷"
+  ) {
     resetDisplay();
   }
   if (!called) {
@@ -93,7 +104,6 @@ function resetDisplay() {
 }
 
 function operatorClicked(chosenOperator) {
-  resetDisplay();
   display.textContent = chosenOperator;
   switch (chosenOperator) {
     case "+":
