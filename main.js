@@ -1,52 +1,71 @@
-const add = (a, b) => {
-  return a + b;
-};
+let buttons = document.querySelector(".buttons");
+let display = document.querySelector(".screen");
+let equal = document.querySelector(".btn.equal");
 
-const subtract = function (a, b) {
-  return a - b;
-};
+function add(a, b) {
+  //return a + b;
+  display.textContent = a + b;
+}
 
-const multiply = function (a, b) {
-  return a * b;
-};
+function subtract(a, b) {
+  display.textContent = a - b;
+}
 
-const division = function (a, b) {
-  return a / b;
-};
+function multiply(a, b) {
+  display.textContent = a * b;
+}
+
+function division(a, b) {
+  display.textContent = a / b;
+}
 
 let num1;
-let operator;
 let num2;
+let operator;
+let called = false;
 
-const operate = function (num1, num2, operator) {
+function operate(num1, num2, operator) {
   switch (operator) {
     case "+":
-      console.log(add(num1, num2));
+      console.log("Logged num1 from operate function: " + num1);
+      add(num1, num2);
       break;
     case "-":
-      console.log(subtract(num1, num2));
+      subtract(num1, num2);
       break;
     case "÷":
-      console.log(division(num1, num2));
+      division(num1, num2);
       break;
-    case "x":
-      console.log(multiply(num1, num2));
+    case "*":
+      multiply(num1, num2);
       break;
   }
-};
-
-operate(1, 5, "÷");
+}
 
 // let numberButton = document.querySelectorAll(".number");
 // console.log(numberButton);
-let buttons = document.querySelector(".buttons");
-let display = document.querySelector(".screen");
 
 buttons.addEventListener("click", (e) => {
   // If the button clicked on has the classes of btn & number
   // we call appendNumber with its current content
   if (e.target.className === "btn number") {
     appendNumber(e.target.textContent);
+  }
+  if (e.target.className === "btn add") {
+    operatorClicked(e.target.textContent);
+  }
+  if (e.target.className === "btn subtract") {
+    operatorClicked(e.target.textContent);
+  }
+  if (e.target.className === "btn division") {
+    operatorClicked(e.target.textContent);
+  }
+  if (e.target.className === "btn multiply") {
+    operatorClicked(e.target.value);
+    console.log(e.target.value);
+  }
+  if (e.target.className === "btn equal") {
+    operate(num1, num2, operator);
   }
 });
 
@@ -56,9 +75,43 @@ function appendNumber(number) {
   if (display.textContent === "0") {
     resetDisplay();
   }
-  display.textContent += number;
+  if (called && num2 === undefined) {
+    resetDisplay();
+  }
+  if (!called) {
+    num1 = parseFloat((display.textContent += number));
+    console.log("Num1 is :" + num1);
+  }
+  if (called) {
+    num2 = parseFloat((display.textContent += number));
+    console.log("num2 is: " + num2);
+  }
 }
 
 function resetDisplay() {
   display.textContent = "";
+}
+
+function operatorClicked(chosenOperator) {
+  resetDisplay();
+  display.textContent = chosenOperator;
+  switch (chosenOperator) {
+    case "+":
+      operator = "+";
+      console.log(chosenOperator);
+      called = true;
+      break;
+    case "-":
+      operator = "-";
+      called = true;
+      break;
+    case "÷":
+      operator = "÷";
+      called = true;
+      break;
+    case "*":
+      operator = "*";
+      called = true;
+      break;
+  }
 }
