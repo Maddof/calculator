@@ -1,6 +1,7 @@
 let buttons = document.querySelector(".buttons");
 let display = document.querySelector(".screen");
 let equal = document.querySelector(".btn.equal");
+let clear = document.querySelector(".btn.clear");
 
 function add(a, b) {
   result = display.textContent = a + b;
@@ -77,6 +78,12 @@ equal.addEventListener("click", (e) => {
   }
 });
 
+clear.addEventListener("click", (e) => {
+  if (e.target.className === "btn clear") {
+    clearCalc();
+  }
+});
+
 //Helper functions
 
 function appendNumber(number) {
@@ -101,6 +108,15 @@ function appendNumber(number) {
 
 function resetDisplay() {
   display.textContent = "";
+}
+
+function clearCalc() {
+  num1 = "";
+  num2 = "";
+  operator = "";
+  called = false;
+  result = undefined;
+  resetDisplay();
 }
 
 function operatorClicked(chosenOperator) {
