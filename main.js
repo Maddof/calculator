@@ -35,7 +35,7 @@ function operate(num1, num2, operator) {
       subtract(num1, num2);
       break;
     case "÷":
-      if (num2 == 0 || num2 == NaN || num2 == "") {
+      if (num2 == 0) {
         display.textContent = "NOOOOO!";
         break;
       } else {
@@ -47,9 +47,6 @@ function operate(num1, num2, operator) {
       break;
   }
 }
-
-// let numberButton = document.querySelectorAll(".number");
-// console.log(numberButton);
 
 buttons.addEventListener("click", (e) => {
   // If the button clicked on has the classes of btn & number
@@ -119,7 +116,7 @@ function clearCalc() {
 }
 
 function deleteNumber() {
-  if (num1 === num2) {
+  if (num1 === num2 && result == undefined) {
     console.log("deleted second number");
     display.textContent = display.textContent.slice(0, -1);
     num2 = parseFloat(display.textContent);
