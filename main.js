@@ -29,15 +29,19 @@ let result;
 function operate(num1, num2, operator) {
   switch (operator) {
     case "+":
-      console.log("Logged num1 from operate function: " + num1);
       add(num1, num2);
       break;
     case "-":
       subtract(num1, num2);
       break;
     case "÷":
-      division(num1, num2);
-      break;
+      if (num2 == 0) {
+        display.textContent = "NOOOOO!";
+        break;
+      } else {
+        division(num1, num2);
+        break;
+      }
     case "*":
       multiply(num1, num2);
       break;
@@ -116,7 +120,7 @@ function clearCalc() {
   operator = "";
   called = false;
   result = undefined;
-  resetDisplay();
+  display.textContent = "0";
 }
 
 function operatorClicked(chosenOperator) {
