@@ -2,10 +2,10 @@ let buttons = document.querySelector(".buttons");
 let display = document.querySelector(".screen");
 let equal = document.querySelector(".btn.equal");
 let clear = document.querySelector(".btn.clear");
+let deleteBtn = document.querySelector(".btn.delete");
 
 function add(a, b) {
   result = display.textContent = a + b;
-  console.log("Result is: " + result);
 }
 
 function subtract(a, b) {
@@ -68,25 +68,20 @@ buttons.addEventListener("click", (e) => {
   }
   if (e.target.className === "btn multiply") {
     operatorClicked(e.target.value);
-    console.log(e.target.value);
   }
 });
 
 equal.addEventListener("click", (e) => {
   if (e.target.className === "btn equal" && result === undefined) {
-    console.log("result definition: " + result);
     operate(num1, num2, operator);
   } else if (e.target.className === "btn equal" && result !== undefined) {
-    console.log("result definition: " + result);
     operate(result, num2, operator);
   }
 });
 
-clear.addEventListener("click", (e) => {
-  if (e.target.className === "btn clear") {
-    clearCalc();
-  }
-});
+clear.addEventListener("click", clearCalc);
+
+deleteBtn.addEventListener("click", deleteNumber);
 
 //Helper functions
 
@@ -102,11 +97,9 @@ function appendNumber(number) {
   }
   if (!called) {
     num1 = parseFloat((display.textContent += number));
-    console.log("Num1 is :" + num1);
   }
   if (called) {
     num2 = parseFloat((display.textContent += number));
-    console.log("num2 is: " + num2);
   }
 }
 
@@ -123,12 +116,24 @@ function clearCalc() {
   display.textContent = "0";
 }
 
+function deleteNumber() {
+  if (num1 == display.textContent) {
+    console.log("deleted first number");
+    display.textContent = display.textContent.slice(0, -1);
+    num1 = parseFloat(display.textContent);
+  }
+  if (num2 == display.textContent) {
+    console.log("deleted second number");
+    display.textContent = display.textContent.slice(0, -1);
+    num2 = parseFloat(display.textContent);
+  }
+}
+
 function operatorClicked(chosenOperator) {
   display.textContent = chosenOperator;
   switch (chosenOperator) {
     case "+":
       operator = "+";
-      console.log(chosenOperator);
       called = true;
       break;
     case "-":
