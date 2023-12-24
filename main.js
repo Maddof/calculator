@@ -1,7 +1,7 @@
 let buttons = document.querySelector(".buttons");
 let display = document.querySelector(".screen");
-let equal = document.querySelector(".btn.equal");
-let clear = document.querySelector(".btn.clear");
+let equalBtn = document.querySelector(".btn.equal");
+let clearBtn = document.querySelector(".btn.clear");
 let deleteBtn = document.querySelector(".btn.delete");
 
 function add(a, b) {
@@ -35,7 +35,7 @@ function operate(num1, num2, operator) {
       subtract(num1, num2);
       break;
     case "÷":
-      if (num2 == 0) {
+      if (num2 == 0 || num2 == NaN || num2 == "") {
         display.textContent = "NOOOOO!";
         break;
       } else {
@@ -71,7 +71,7 @@ buttons.addEventListener("click", (e) => {
   }
 });
 
-equal.addEventListener("click", (e) => {
+equalBtn.addEventListener("click", (e) => {
   if (e.target.className === "btn equal" && result === undefined) {
     operate(num1, num2, operator);
   } else if (e.target.className === "btn equal" && result !== undefined) {
@@ -79,7 +79,7 @@ equal.addEventListener("click", (e) => {
   }
 });
 
-clear.addEventListener("click", clearCalc);
+clearBtn.addEventListener("click", clearCalc);
 
 deleteBtn.addEventListener("click", deleteNumber);
 
@@ -97,9 +97,11 @@ function appendNumber(number) {
   }
   if (!called) {
     num1 = parseFloat((display.textContent += number));
+    console.log("Num1 is: " + num1);
   }
   if (called) {
     num2 = parseFloat((display.textContent += number));
+    console.log("Num2 is: " + num2);
   }
 }
 
@@ -117,12 +119,15 @@ function clearCalc() {
 }
 
 function deleteNumber() {
-  if (num1 == display.textContent) {
+  if (num1 === num2) {
+    console.log("deleted second number");
+    display.textContent = display.textContent.slice(0, -1);
+    num2 = parseFloat(display.textContent);
+  } else if (num1 == display.textContent) {
     console.log("deleted first number");
     display.textContent = display.textContent.slice(0, -1);
     num1 = parseFloat(display.textContent);
-  }
-  if (num2 == display.textContent) {
+  } else if (num2 == display.textContent) {
     console.log("deleted second number");
     display.textContent = display.textContent.slice(0, -1);
     num2 = parseFloat(display.textContent);
