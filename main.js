@@ -30,6 +30,7 @@ let num2;
 let operator;
 let called = false;
 let result;
+let hasDecimal;
 
 function operate(num1, num2, operator) {
   switch (operator) {
@@ -136,11 +137,11 @@ function deleteNumber() {
 }
 
 function addDecimal() {
-  console.log(decimalBtn);
-  if (!called) {
+  const decimalTest = display.textContent.includes(".");
+  if (!called && !decimalTest) {
     num1 = parseFloat((display.textContent += "."));
   }
-  if (called) {
+  if (called && !decimalTest) {
     num2 = parseFloat((display.textContent += "."));
   }
 }
