@@ -1,8 +1,11 @@
+// Needed javascript selectors to get interactivity working
+
 let buttons = document.querySelector(".buttons");
 let display = document.querySelector(".screen");
 let equalBtn = document.querySelector(".btn.equal");
 let clearBtn = document.querySelector(".btn.clear");
 let deleteBtn = document.querySelector(".btn.delete");
+let decimalBtn = document.querySelector(".btn.decimal");
 
 function add(a, b) {
   result = display.textContent = a + b;
@@ -20,6 +23,8 @@ function division(a, b) {
   result = display.textContent = a / b;
 }
 
+// Define the variables in global scope that gets changed
+// in helper functions so we can use elsewhere
 let num1;
 let num2;
 let operator;
@@ -76,11 +81,13 @@ equalBtn.addEventListener("click", (e) => {
   }
 });
 
+// EventListeners for various helper functions
+
 clearBtn.addEventListener("click", clearCalc);
 
 deleteBtn.addEventListener("click", deleteNumber);
 
-//Helper functions
+decimalBtn.addEventListener("click", addDecimal);
 
 function appendNumber(number) {
   if (
@@ -94,13 +101,13 @@ function appendNumber(number) {
   }
   if (!called) {
     num1 = parseFloat((display.textContent += number));
-    console.log("Num1 is: " + num1);
   }
   if (called) {
     num2 = parseFloat((display.textContent += number));
-    console.log("Num2 is: " + num2);
   }
 }
+
+//Helper functions
 
 function resetDisplay() {
   display.textContent = "";
@@ -117,19 +124,30 @@ function clearCalc() {
 
 function deleteNumber() {
   if (num1 === num2 && result == undefined) {
-    console.log("deleted second number");
     display.textContent = display.textContent.slice(0, -1);
     num2 = parseFloat(display.textContent);
   } else if (num1 == display.textContent) {
-    console.log("deleted first number");
     display.textContent = display.textContent.slice(0, -1);
     num1 = parseFloat(display.textContent);
   } else if (num2 == display.textContent) {
-    console.log("deleted second number");
     display.textContent = display.textContent.slice(0, -1);
     num2 = parseFloat(display.textContent);
   }
 }
+
+function addDecimal() {
+  console.log(decimalBtn);
+  if (!called) {
+    num1 = parseFloat((display.textContent += "."));
+  }
+  if (called) {
+    num2 = parseFloat((display.textContent += "."));
+  }
+}
+
+// Handle the input numbers by setting called to true after clicking
+// the operator of choice.
+// This way we can distinguish between first and second operand.
 
 function operatorClicked(chosenOperator) {
   display.textContent = chosenOperator;
