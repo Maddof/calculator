@@ -76,7 +76,6 @@ buttons.addEventListener("click", (e) => {
 // Keyboard support
 
 window.addEventListener("keydown", (e) => {
-  console.log(e);
   if (e.key >= 0 && e.key <= 9) appendNumber(e.key);
   if (e.key === ".") addDecimal();
   if (e.key === "Backspace") deleteNumber();
