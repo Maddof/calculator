@@ -30,7 +30,6 @@ let num2;
 let operator;
 let called = false;
 let result;
-let hasDecimal;
 
 function operate(num1, num2, operator) {
   switch (operator) {
@@ -71,6 +70,27 @@ buttons.addEventListener("click", (e) => {
   }
   if (e.target.className === "btn multiply") {
     operatorClicked(e.target.value);
+  }
+});
+
+// Keyboard support
+
+window.addEventListener("keydown", (e) => {
+  console.log(e);
+  if (e.key >= 0 && e.key <= 9) appendNumber(e.key);
+  if (e.key === ".") addDecimal();
+  if (e.key === "Backspace") deleteNumber();
+  if (e.key === "Escape") clearCalc();
+  if (e.key === "+") operatorClicked(e.key);
+  if (e.key === "-") operatorClicked(e.key);
+  if (e.key === "*") operatorClicked(e.key);
+  if (e.key === "/" || e.key === "÷") operatorClicked("÷");
+  if (e.key === "Enter") {
+    if (result === undefined) {
+      operate(num1, num2, operator);
+    } else if (result !== undefined) {
+      operate(result, num2, operator);
+    }
   }
 });
 
